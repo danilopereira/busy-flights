@@ -8,5 +8,5 @@ import org.springframework.http.ResponseEntity;
  * Created by danilopereira on 15/03/18.
  */
 public interface CrazyAirClient {
-    ResponseEntity<CrazyAirResponse> getFlights(CrazyAirRequest crazyAirRequest);
+    ResponseEntity<CrazyAirResponse[]> getFlights(CrazyAirRequest crazyAirRequest);
 }

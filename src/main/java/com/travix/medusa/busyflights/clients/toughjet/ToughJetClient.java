@@ -8,5 +8,5 @@ import org.springframework.http.ResponseEntity;
  * Created by danilopereira on 15/03/18.
  */
 public interface ToughJetClient {
-    ResponseEntity<ToughJetResponse> getFlights(ToughJetRequest toughJetRequest);
+    ResponseEntity<ToughJetResponse[]> getFlights(ToughJetRequest toughJetRequest);
 }

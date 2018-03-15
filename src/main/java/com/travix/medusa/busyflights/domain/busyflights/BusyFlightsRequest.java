@@ -1,18 +1,28 @@
 package com.travix.medusa.busyflights.domain.busyflights;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.time.format.DateTimeFormatter;
 
 public class BusyFlightsRequest {
+    private static final String DATE_PATTERN = DateTimeFormatter.ISO_LOCAL_DATE.toString();
 
     @NotNull
     private String origin;
+
     @NotNull
     private String destination;
+
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String departureDate;
+
     @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String returnDate;
+
     @Min(value = 1)
     private int numberOfPassengers;
 

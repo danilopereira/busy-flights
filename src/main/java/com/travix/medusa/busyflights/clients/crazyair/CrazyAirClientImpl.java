@@ -20,9 +20,9 @@ public class CrazyAirClientImpl implements CrazyAirClient {
     }
 
     @Override
-    public ResponseEntity<CrazyAirResponse> getFlights(CrazyAirRequest crazyAirRequest) {
+    public ResponseEntity<CrazyAirResponse[]> getFlights(CrazyAirRequest crazyAirRequest) {
         String url = createRequestUrl(crazyAirRequest);
-        return restTemplate.getForEntity(url, CrazyAirResponse.class);
+        return restTemplate.getForEntity(url, CrazyAirResponse[].class);
     }
 
     private String createRequestUrl(CrazyAirRequest crazyAirRequest) {

@@ -12,39 +12,66 @@ public class ToughJetRequest {
         return from;
     }
 
-    public void setFrom(final String from) {
-        this.from = from;
-    }
-
     public String getTo() {
         return to;
-    }
-
-    public void setTo(final String to) {
-        this.to = to;
     }
 
     public String getOutboundDate() {
         return outboundDate;
     }
 
-    public void setOutboundDate(final String outboundDate) {
-        this.outboundDate = outboundDate;
-    }
-
     public String getInboundDate() {
         return inboundDate;
-    }
-
-    public void setInboundDate(final String inboundDate) {
-        this.inboundDate = inboundDate;
     }
 
     public int getNumberOfAdults() {
         return numberOfAdults;
     }
 
-    public void setNumberOfAdults(final int numberOfAdults) {
-        this.numberOfAdults = numberOfAdults;
+    private ToughJetRequest(){
+
+    }
+
+    public static class ToughJetRequestBuilder{
+        private String from;
+        private String to;
+        private String outboundDate;
+        private String inboundDate;
+        private int numberOfAdults;
+
+        public ToughJetRequestBuilder setFrom(String from){
+            this.from = from;
+            return this;
+        }
+
+        public ToughJetRequestBuilder setTo(String to){
+            this.to = to;
+            return this;
+        }
+
+        public ToughJetRequestBuilder setOutboundDate(String outboundDate){
+            this.outboundDate = outboundDate;
+            return this;
+        }
+
+        public ToughJetRequestBuilder setInboundDate(String inboundDate){
+            this.inboundDate = inboundDate;
+            return this;
+        }
+        public ToughJetRequestBuilder setNumberOfAdults(int numberOfAdults){
+            this.numberOfAdults = numberOfAdults;
+            return this;
+        }
+
+        public ToughJetRequest build(){
+            ToughJetRequest toughJetRequest = new ToughJetRequest();
+            toughJetRequest.from = this.from;
+            toughJetRequest.to = this.to;
+            toughJetRequest.inboundDate = this.inboundDate;
+            toughJetRequest.outboundDate = this.outboundDate;
+            toughJetRequest.numberOfAdults = this.numberOfAdults;
+
+            return toughJetRequest;
+        }
     }
 }

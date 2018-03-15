@@ -5,11 +5,12 @@ import com.travix.medusa.busyflights.domain.crazyair.CrazyAirResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by danilopereira on 15/03/18.
  */
 @Service
 public interface CrazyAirService {
-    List<CrazyAirResponse> getFights(CrazyAirRequest crazyAirRequest);
+    CompletableFuture<List<CrazyAirResponse>> getFights(CrazyAirRequest crazyAirRequest) throws Exception;
 }

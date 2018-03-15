@@ -16,10 +16,15 @@ public class ToughJetClientImpl implements ToughJetClient {
     private static final String GET_FLIGHTS_URL_TEMPLATE = "/flights?from=%s&to=%s" +
             "&outBoundDate=%s&inboundDate=%s&numberOfAdults=%s";
 
+    public ToughJetClientImpl(RestTemplate restTemplate, String baseUrl) {
+        this.restTemplate = restTemplate;
+        this.baseUrl = baseUrl;
+    }
+
     @Override
-    public ResponseEntity<ToughJetResponse> getFlights(ToughJetRequest toughJetRequest) {
+    public ResponseEntity<ToughJetResponse[]> getFlights(ToughJetRequest toughJetRequest) {
         String url = buildRequestUrl(toughJetRequest);
-        return restTemplate.getForEntity(url, ToughJetResponse.class);
+        return restTemplate.getForEntity(url, ToughJetResponse[].class);
     }
 
     private String buildRequestUrl(ToughJetRequest toughJetRequest) {

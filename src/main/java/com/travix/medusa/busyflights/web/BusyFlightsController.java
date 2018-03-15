@@ -20,7 +20,7 @@ public class BusyFlightsController {
     BusyFlightsService busFlightsService;
 
     @GetMapping(value = "/v1/flights")
-    public List<BusyFlightsResponse> getFlights(@Valid BusyFlightsRequest busyFlightsRequest){
+    public List<BusyFlightsResponse> getFlights(@Valid BusyFlightsRequest busyFlightsRequest) throws Exception {
         return busFlightsService.getFlights(busyFlightsRequest);
     }
 }

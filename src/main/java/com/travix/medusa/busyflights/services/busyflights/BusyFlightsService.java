@@ -9,8 +9,7 @@ import java.util.List;
 /**
  * Created by danilopereira on 15/03/18.
  */
-@Service
 public interface BusyFlightsService {
 
-    List<BusyFlightsResponse> getFlights(BusyFlightsRequest busyFlightsRequest);
+    List<BusyFlightsResponse> getFlights(BusyFlightsRequest busyFlightsRequest) throws Exception;
 }
