@@ -1,6 +1,8 @@
 package com.travix.medusa.busyflights.services.toughjet;
 
 import com.travix.medusa.busyflights.clients.toughjet.ToughJetClient;
+import com.travix.medusa.busyflights.common.ErrorCode;
+import com.travix.medusa.busyflights.common.exceptions.ToughJetException;
 import com.travix.medusa.busyflights.domain.toughjet.ToughJetRequest;
 import com.travix.medusa.busyflights.domain.toughjet.ToughJetResponse;
 import org.slf4j.Logger;
@@ -25,7 +27,7 @@ public class ToughJetServiceImpl implements ToughJetService {
 
     @Override
     @Async
-    public CompletableFuture<List<ToughJetResponse>> getFlights(ToughJetRequest toughJetRequest) throws Exception {
+    public CompletableFuture<List<ToughJetResponse>> getFlights(ToughJetRequest toughJetRequest) throws ToughJetException {
         log.info("Thread Name : " +Thread.currentThread().getName());
         List<ToughJetResponse> toughJetResponses = new ArrayList<>();
         ResponseEntity<ToughJetResponse[]> flights = toughJetClient.getFlights(toughJetRequest);
@@ -35,7 +37,7 @@ public class ToughJetServiceImpl implements ToughJetService {
                 toughJetResponses.add(flights.getBody()[i]);
             }
         }else{
-            throw new Exception(flights.getStatusCodeValue() +  " : " + flights.getBody().toString());
+            throw new ToughJetException(ErrorCode.GENERIC_SUPPLIER_ERROR.value(), ErrorCode.GENERIC_SUPPLIER_ERROR.message());
         }
         return CompletableFuture.completedFuture(toughJetResponses);
     }

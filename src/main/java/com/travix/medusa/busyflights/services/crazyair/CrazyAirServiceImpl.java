@@ -1,6 +1,8 @@
 package com.travix.medusa.busyflights.services.crazyair;
 
 import com.travix.medusa.busyflights.clients.crazyair.CrazyAirClient;
+import com.travix.medusa.busyflights.common.ErrorCode;
+import com.travix.medusa.busyflights.common.exceptions.CrazyAirException;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirRequest;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirResponse;
 import org.slf4j.Logger;
@@ -26,17 +28,22 @@ public class CrazyAirServiceImpl implements CrazyAirService {
 
     @Override
     @Async
-    public CompletableFuture<List<CrazyAirResponse>> getFights(CrazyAirRequest crazyAirRequest) throws Exception {
+    public CompletableFuture<List<CrazyAirResponse>> getFlights(CrazyAirRequest crazyAirRequest) throws CrazyAirException {
         log.info("Thread Name : " +Thread.currentThread().getName());
         List<CrazyAirResponse> crazyAirResponse = new ArrayList<>();
-        ResponseEntity<CrazyAirResponse[]> flights = crazyAirClient.getFlights(crazyAirRequest);
+        ResponseEntity<CrazyAirResponse[]> flights = null;
+        try{
+            flights = crazyAirClient.getFlights(crazyAirRequest);
+        }catch(Exception e){
+            throw new CrazyAirException(ErrorCode.GENERIC_SUPPLIER_ERROR.value(), ErrorCode.GENERIC_SUPPLIER_ERROR.message());
+        }
         if(HttpStatus.OK.equals(flights.getStatusCode())){
             for(int i = 0; i< flights.getBody().length; i++){
                 crazyAirResponse.add(flights.getBody()[i]);
             }
         }
         else{
-            throw new Exception(flights.getStatusCodeValue() +  " : " + flights.getBody().toString());
+            throw new CrazyAirException(ErrorCode.GENERIC_SUPPLIER_ERROR.value(), ErrorCode.GENERIC_SUPPLIER_ERROR.message());
         }
 
         return CompletableFuture.completedFuture(crazyAirResponse);

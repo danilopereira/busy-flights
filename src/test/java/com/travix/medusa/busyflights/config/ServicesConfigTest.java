@@ -4,23 +4,22 @@ import com.travix.medusa.busyflights.clients.crazyair.CrazyAirClient;
 import com.travix.medusa.busyflights.clients.crazyair.CrazyAirClientImpl;
 import com.travix.medusa.busyflights.clients.toughjet.ToughJetClient;
 import com.travix.medusa.busyflights.clients.toughjet.ToughJetClientImpl;
-import com.travix.medusa.busyflights.services.busyflights.BusyFlightsService;
-import com.travix.medusa.busyflights.services.busyflights.BusyFlightsServiceImpl;
 import com.travix.medusa.busyflights.services.crazyair.CrazyAirService;
 import com.travix.medusa.busyflights.services.crazyair.CrazyAirServiceImpl;
 import com.travix.medusa.busyflights.services.toughjet.ToughJetService;
 import com.travix.medusa.busyflights.services.toughjet.ToughJetServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by danilopereira on 15/03/18.
  */
 @Configuration
-public class BusyFlightsConfig {
+@TestPropertySource(locations = {"classpath:test-application.properties"})
+public class ServicesConfigTest {
     @Value("${crazyAir.baseUrl}")
     private String crazyAirBaseUrl;
 
@@ -28,8 +27,8 @@ public class BusyFlightsConfig {
     private String toughJetBaseUrl;
 
     @Bean
-    public RestTemplate restTemplate(RestTemplateBuilder builder){
-        return builder.build();
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
     }
 
     @Bean
@@ -43,20 +42,14 @@ public class BusyFlightsConfig {
     }
 
     @Bean
-    public BusyFlightsService busyFlightsService(){
-        return new BusyFlightsServiceImpl();
-    }
-
-    @Bean
     public CrazyAirService crazyAirService(){
         return new CrazyAirServiceImpl();
     }
+
 
     @Bean
     public ToughJetService toughJetService(){
         return new ToughJetServiceImpl();
     }
-
-
 
 }

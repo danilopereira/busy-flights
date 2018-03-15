@@ -1,5 +1,6 @@
 package com.travix.medusa.busyflights.services.crazyair;
 
+import com.travix.medusa.busyflights.common.exceptions.CrazyAirException;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirRequest;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirResponse;
 import org.springframework.stereotype.Service;
@@ -12,5 +13,5 @@ import java.util.concurrent.CompletableFuture;
  */
 @Service
 public interface CrazyAirService {
-    CompletableFuture<List<CrazyAirResponse>> getFights(CrazyAirRequest crazyAirRequest) throws Exception;
+    CompletableFuture<List<CrazyAirResponse>> getFlights(CrazyAirRequest crazyAirRequest) throws CrazyAirException;
 }

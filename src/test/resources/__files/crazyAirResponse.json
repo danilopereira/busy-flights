@@ -1,0 +1,27 @@
+[{
+    "airline": "Crazy Example 1",
+	"price": 1234.56,
+	"cabinClass": "B",
+	"departureAirportCode": "CGH",
+	"destinationAirportCode": "LHR",
+	"departureDate": "2018-12-03T10:15:30",
+	"arrivalDate": "2018-12-03T23:15:30"
+},
+{
+	"airline": "Crazy Example 2",
+	"price": 1234.56,
+	"cabinClass": "E",
+	"departureAirportCode": "CGH",
+	"destinationAirportCode": "LHR",
+	"departureDate": "2018-05-17T10:15:30",
+	"arrivalDate": "2018-05-18T23:15:30"
+},
+{
+	"airline": "Crazy Example 3",
+	"price": 12345.67,
+	"cabinClass": "E",
+	"departureAirportCode": "LAX",
+	"destinationAirportCode": "HND",
+	"departureDate": "2018-05-17T10:15:30",
+	"arrivalDate": "2018-05-18T23:15:30"
+}]

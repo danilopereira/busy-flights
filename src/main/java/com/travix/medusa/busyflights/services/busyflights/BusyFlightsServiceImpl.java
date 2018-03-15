@@ -1,5 +1,7 @@
 package com.travix.medusa.busyflights.services.busyflights;
 
+import com.travix.medusa.busyflights.common.ErrorCode;
+import com.travix.medusa.busyflights.common.exceptions.GenericErrorException;
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsRequest;
 import com.travix.medusa.busyflights.domain.busyflights.BusyFlightsResponse;
 import com.travix.medusa.busyflights.domain.crazyair.CrazyAirRequest;
@@ -10,16 +12,15 @@ import com.travix.medusa.busyflights.services.crazyair.CrazyAirService;
 import com.travix.medusa.busyflights.services.toughjet.ToughJetService;
 import com.travix.medusa.busyflights.utils.DateConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by danilopereira on 15/03/18.
  */
-@Service
 public class BusyFlightsServiceImpl implements BusyFlightsService {
 
     public static final String CRAZY_FLIGHT_SUPPLIER = "Crazy Flight";
@@ -31,9 +32,9 @@ public class BusyFlightsServiceImpl implements BusyFlightsService {
     private ToughJetService toughJetService;
 
     @Override
-    public List<BusyFlightsResponse> getFlights(BusyFlightsRequest busyFlightsRequest) throws Exception {
+    public List<BusyFlightsResponse> getFlights(BusyFlightsRequest busyFlightsRequest) throws GenericErrorException {
         List<BusyFlightsResponse> busyFlightsResponses = new ArrayList<>();
-
+        try {
         //Get Flights from CrazyAir
         CrazyAirRequest crazyAirRequest = new CrazyAirRequest.CrazyAirRequestBuilder()
                 .setDepartureDate(busyFlightsRequest.getDepartureDate())
@@ -43,7 +44,7 @@ public class BusyFlightsServiceImpl implements BusyFlightsService {
                 .setPassengerCount(busyFlightsRequest.getNumberOfPassengers())
                 .build();
 
-        List<CrazyAirResponse> crazyAirFights = crazyAirService.getFights(crazyAirRequest).get();
+        List<CrazyAirResponse> crazyAirFights = crazyAirService.getFlights(crazyAirRequest).get();
 
         //Get Flights from ToughJet
         ToughJetRequest toughJetRequest = new ToughJetRequest.ToughJetRequestBuilder()
@@ -56,6 +57,10 @@ public class BusyFlightsServiceImpl implements BusyFlightsService {
         List<ToughJetResponse> toughJetFlights = toughJetService.getFlights(toughJetRequest).get();
 
         busyFlightsResponses = combineResults(crazyAirFights, toughJetFlights);
+        } catch (Exception e) {
+            throw new GenericErrorException(ErrorCode.GENERIC_ERROR.value(), ErrorCode.GENERIC_ERROR.message(), e.getCause());
+        }
+
 
 
         return busyFlightsResponses;

@@ -1,9 +1,12 @@
 package com.travix.medusa.busyflights.domain.crazyair;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CrazyAirResponse {
 
     private String airline;
     private double price;
+    @JsonProperty("cabinClass")
     private String cabinclass;
     private String departureAirportCode;
     private String destinationAirportCode;
